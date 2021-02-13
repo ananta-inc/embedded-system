@@ -1,0 +1,48 @@
+const int ledPinRed = 21;
+const int ledPinYellow = 5;
+const int ledPinGreen = 4;
+
+int val = 0;
+
+
+const int XPos = 50;
+const int XNeg = 13;
+void setup() {
+  Serial.begin(9600);
+  delay(1000);
+  pinMode (ledPinRed, OUTPUT);
+  pinMode (ledPinYellow, OUTPUT);
+  pinMode (ledPinGreen, OUTPUT);
+}
+
+// put your main code here, to run repeatedly
+void loop() {
+  // read hall effect sensor value
+  val = hallRead();
+  // print the results to the serial monitor
+  Serial.println(val); 
+  delay(1000);
+  if(val>XPos || val<XNeg){
+    //turn Red LED on -> indicates positive pole
+    digitalWrite(ledPinRed, HIGH);
+    delay(2000);
+    digitalWrite(ledPinYellow, HIGH);
+    delay(1000);
+    digitalWrite(ledPinRed, LOW);
+    digitalWrite(ledPinYellow, LOW);
+    digitalWrite(ledPinGreen, HIGH);
+    delay(3000);
+    digitalWrite(ledPinGreen, LOW);
+
+    digitalWrite(ledPinYellow, HIGH);
+    delay(500);
+    digitalWrite(ledPinRed, HIGH);
+  }
+  
+  else{
+    digitalWrite(ledPinRed, HIGH);
+    digitalWrite(ledPinYellow, LOW);
+    digitalWrite(ledPinGreen, LOW);
+  }
+  delay(500);
+}
